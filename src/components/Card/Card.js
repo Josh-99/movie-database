@@ -1,5 +1,6 @@
 import React from "react";
 import Poster from "../Poster/Poster";
+import { useIsBelowSmallOnly } from "../../Hooks/MediaQueries";
 
 const Card = ({
   adult,
@@ -15,16 +16,44 @@ const Card = ({
   title,
   video,
   vote_average,
-  vote_count
+  vote_count,
+  setShowModal,
+  handleClick
 }) => {
-  return (
-    <div className="w-1/5 cursor-pointer">
-      <div className="p-2">
-        {/* <div className="font-semibold leading-none text-center">{title}</div> */}
-        <Poster poster_path={poster_path} title={title} />
+  const isBelowSmall = useIsBelowSmallOnly();
+
+  if (isBelowSmall) {
+    return (
+      <div className="w-1/2">
+        <div className="p-2">
+          <Poster
+            poster_path={poster_path}
+            title={title}
+            setShowModal={setShowModal}
+            id={id}
+            handleClick={handleClick}
+          />
+        </div>
       </div>
-    </div>
-  );
+    );
+  }
+
+  if (!isBelowSmall) {
+    return (
+      <div className="w-1/5 cursor-pointer">
+        <div className="p-2">
+          {/* <div className="font-semibold leading-none text-center">{title}</div> */}
+          <Poster
+            poster_path={poster_path}
+            title={title}
+            setShowModal={setShowModal}
+            id={id}
+            handleClick={handleClick}
+          />
+        </div>
+      </div>
+    );
+  }
 };
 
 export default Card;

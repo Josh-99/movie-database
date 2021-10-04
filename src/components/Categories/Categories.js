@@ -1,5 +1,5 @@
 import { React, useState } from "react";
-import { useMediaQuery } from "react-responsive";
+// import { useMediaQuery } from "react-responsive";
 import { useIsBelowSmallOnly } from "../../Hooks/MediaQueries";
 
 const Categories = () => {
@@ -14,23 +14,33 @@ const Categories = () => {
   const isBelowSmall = useIsBelowSmallOnly();
 
   if (isBelowSmall) {
-    return <div>Mobile</div>;
+    return (
+      <form className="flex justify-center mt-4 mb-4 bg-black">
+        <select className="w-2/4 text-center text-title">
+          {categories.map((category) => {
+            return <option key={category}>{category}</option>;
+          })}
+        </select>
+      </form>
+    );
   }
 
-  return (
-    <div className="flex justify-center bg-black">
-      {categories.map((category) => {
-        return (
-          <p
-            className="text-title
+  if (!isBelowSmall) {
+    return (
+      <div className="flex justify-center bg-black">
+        {categories.map((category) => {
+          return (
+            <p
+              className="text-title
         md:text-display-sm p-4 text-ongreen"
-          >
-            {category}
-          </p>
-        );
-      })}
-    </div>
-  );
+            >
+              {category}
+            </p>
+          );
+        })}
+      </div>
+    );
+  }
 };
 
 export default Categories;
